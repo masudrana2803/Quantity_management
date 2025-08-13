@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quantity Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #6dd5ed, #2193b0);
+      margin: 0;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    #logoutBtn {
+      float: right;
+      background: #dc3545;
+      border: none;
+      padding: 8px 12px;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    #logoutBtn:hover {
+      background: #b02a37;
+    }
+
+    .input-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    input {
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      flex: 1;
+      min-width: 150px;
+    }
+
+    button {
+      background: #2193b0;
+      color: white;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #176f81;
+    }
+
+    .stats {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 16px;
+      color: #444;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th {
+      background: #2193b0;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+
+    td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+    }
+
+    tr:hover {
+      background: #f5f5f5;
+    }
+
+    .download-buttons {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .download-buttons button {
+      margin: 5px;
+    }
+
+    /* Edit button style */
+    .editBtn {
+      background: #ffc107;
+      color: #212529;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .editBtn:hover {
+      background: #e0a800;
+    }
+	    /* Edit button style */
+    .deleteBtn {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .deleteBtn:hover {
+      background: #b02a37;
+    }
+    
+    .graph-options {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    .graph-options button {
+        margin: 0 5px;
+    }
+    
+    .chart-container {
+        height: 200px;
+        margin: auto;
+        width: 80%;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button id="logoutBtn">Logout</button>
+    <h1>Quantity Tracker</h1>
+
+    <section class="input-section">
+      <input type="text" id="idInput" placeholder="Enter ID" />
+      <input type="text" id="typeInput" placeholder="Enter Type" />
+      <input type="text" id="brandInput" placeholder="Enter Brand" />
+      <input type="number" id="qtyInput" placeholder="Enter Quantity" />
+      <input type="text" id="personInput" placeholder="Enter Person" />
+      <button id="addBtn">Add</button>
+    </section>
+
+    <section class="stats">
+      <p><b>Total Qty:</b> <span id="totalQty">0</span></p>
+      <p><b>Date of Max Qty:</b> <span id="maxDate">N/A</span></p>
+    </section>
+    
+    <section class="graph-options">
+      <button data-graph="month">Month-wise</button>
+      <button data-graph="person">Person-wise</button>
+      <button data-graph="id">ID-wise</button>
+      <button data-graph="type">Type-wise</button>
+      <button data-graph="brand">Brand-wise</button>
+    </section>
+    
+    <section class="chart-section" style="display:none;">
+      <h2><span id="chartTitle"></span> Graph</h2>
+      <div class="chart-container">
+          <canvas id="myChart"></canvas>
+      </div>
+    </section>
+
+    <section class="data-section">
+      <table id="dataTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Brand</th>
+            <th>Quantity</th>
+            <th>Date</th>
+            <th>Person</th>
+            <th>Edit</th>
+			      <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <div class="download-buttons">
+        <button id="downloadExcel">Download Excel</button>
+        <button id="downloadPDF">Download PDF</button>
+      </div>
+    </section>
+
+    <section class="person-records-section">
+      <h2>Person Records</h2>
+      <div id="personList"></div>
+      <table id="personTable" style="display:none;">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Brand</th>
+            <th>Quantity</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

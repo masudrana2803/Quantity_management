@@ -1,0 +1,84 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background: #f9f9f9;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.input-section {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 8px 12px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #218838;
+}
+
+.stats {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.data-section {
+    text-align: center;
+}
+
+table {
+    margin: auto;
+    border-collapse: collapse;
+    background: white;
+}
+
+th, td {
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+}
+/* Common styles for all pages */
+
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+input {
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  border-color: #2193b0;
+  outline: none;
+  box-shadow: 0 0 5px rgba(33, 147, 176, 0.7);
+}
+
+button:disabled {
+  background: #b0c4cb !important;
+  cursor: not-allowed;
+}
+
+#msgDiv {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
